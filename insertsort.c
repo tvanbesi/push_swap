@@ -6,110 +6,98 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 13:52:34 by user42            #+#    #+#             */
-/*   Updated: 2021/03/26 16:45:38 by user42           ###   ########.fr       */
+/*   Updated: 2021/03/29 16:07:14 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-static void
-	rotate_opti(t_stack *a, t_stack *b, int idx)
+static int
+	getdist(int idx, int size)
 {
-	if (idx >= a->top / 2)
-	{
-		idx = (a->top - 1) - idx;
-		while (idx-- > 0)
-		{
-			stack_operation(a, b, RA);
-			ft_putendl_fd("ra", STDOUT);
-		}
-	}
-	else
-	{
-		idx++;
-		while (idx-- > 0)
-		{
-			stack_operation(a, b, RRA);
-			ft_putendl_fd("rra", STDOUT);
-		}
-	}
+	if (idx <= size / 2)
+		return (idx + 1);
+	return (size - (idx + 1));
 }
 
-static int
-	getinsertidx(t_stack *a, int nb_to_insert)
+static void
+	rotate_chunk(t_stack *a, t_stack *b, int chunk_idx[2])
 {
-	int	i;
+	int	d1;
+	int	d2;
 
-	if (a->top == 2)
-		return (a->top - 1);
-	i = 1;
-	while (i < a->top)
+	(void)b;
+	d1 = getdist(chunk_idx[0], a->top);
+	d2 = getdist(chunk_idx[1], a->top);
+	if (d1 < d2)
+		put_on_top(a, chunk_idx[0], A);
+	else
+		put_on_top(a, chunk_idx[1], A);
+}
+
+static void
+	getchunk(t_stack *a, int chunk[2], int chunk_idx[2])
+{
+	int	threshold;
+	int	chunk_size;
+
+	chunk_size = CHUNK_SIZE - 1;
+	if (a->top < chunk_size + 1)
+		chunk_size = a->top;
+	chunk[0] = getlval(a);
+	threshold = chunk[0];
+	while (chunk_size-- > 0)
+		threshold = getlval_t(a, threshold);
+	chunk[1] = threshold;
+	chunk_idx[0] = getival(a, chunk[0]);
+	chunk_idx[1] = getival(a, chunk[1]);
+}
+
+static void
+	update_chunk(t_stack *a, int chunk[2], int chunk_idx[2], int last_added)
+{
+	if (chunk[0] == last_added)
+		chunk[0] = getlval(a);
+	else if (chunk[1] == last_added)
+		chunk[1] = getbval_t(a, chunk[1]);
+	chunk_idx[0] = getival(a, chunk[0]);
+	chunk_idx[1] = getival(a, chunk[1]);
+}
+
+static void
+	all_to_a(t_stack *a, t_stack *b)
+{
+	put_on_top(b, getibval(b), B);
+	while (b->top)
 	{
-		if (a->items[i] < nb_to_insert
-		&& nb_to_insert < a->items[i - 1])
-			return (i);
-		i++;
+		stack_operation(a, b, PA);
+		ft_putendl_fd("pa", STDOUT);
 	}
-	return (-1);
 }
 
 void
 	insertsort(t_stack *a, t_stack *b)
 {
-	while (!issorted(a, ascending, getibval(a)))
+	int	chunk[2];
+	int	chunk_idx[2];
+
+	while (a->top)
 	{
-		if (a->items[a->top -1] > a->items[a->top - 2]
-		&& a->items[a->top -1] > a->items[0])
+		getchunk(a, chunk, chunk_idx);
+		while (chunk[0] != chunk[1])
 		{
-			stack_operation(a, b, SA);
-			ft_putendl_fd("sa", STDOUT);
-		}
-		else if (a->items[a->top - 1] < a->items[a->top - 2]
-		&& a->items[a->top - 2] < a->items[0])
-		{
-			stack_operation(a, b, RA);
-			ft_putendl_fd("ra", STDOUT);
-		}
-		else
-		{
+			rotate_chunk(a, b, chunk_idx);
+			if (b->top > 1)
+				put_on_top(b, getinsertidx_r(b, a->items[a->top - 1]), B);
 			stack_operation(a, b, PB);
 			ft_putendl_fd("pb", STDOUT);
+			update_chunk(a, chunk, chunk_idx, b->items[b->top - 1]);
 		}
+		put_on_top(a, getival(a, chunk[0]), A);
+		put_on_top(b, getinsertidx_r(b, a->items[a->top - 1]), B);
+		stack_operation(a, b, PB);
+		ft_putendl_fd("pb", STDOUT);
+		put_on_top(b, getibval(b), B);
 	}
-	while (!issorted(a, ascending, 0) || b->top > 0)
-	{
-		if (b->top == 0)
-		{
-			rotate_opti(a, b, getilval(a));
-			continue ;
-		}
-		else if (b->items[b->top - 1] > getbval(a))
-		{
-			rotate_opti(a, b, getilval(a));
-			stack_operation(a, b, PA);
-			ft_putendl_fd("pa", STDOUT);
-		}
-		else if (b->items[b->top - 1] < getlval(a))
-		{
-			rotate_opti(a, b, getilval(a));
-			stack_operation(a, b, PA);
-			ft_putendl_fd("pa", STDOUT);
-		}
-		else if (a->items[a->top - 1] < b->items[b->top - 1]
-		&& b->items[b->top - 1] < a->items[a->top - 2])
-		{
-			stack_operation(a, b, PA);
-			ft_putendl_fd("pa", STDOUT);
-			stack_operation(a, b, SA);
-			ft_putendl_fd("sa", STDOUT);
-		}
-		else if (a->items[a->top - 1] > b->items[b->top - 1]
-		&& b->items[b->top - 1] > a->items[0])
-		{
-			stack_operation(a, b, PA);
-			ft_putendl_fd("pa", STDOUT);
-		}
-		else
-			rotate_opti(a, b, getinsertidx(a, b->items[b->top - 1]));
-	}
+	all_to_a(a, b);
 }

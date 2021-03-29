@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 11:11:21 by user42            #+#    #+#             */
-/*   Updated: 2021/03/26 13:52:27 by user42           ###   ########.fr       */
+/*   Updated: 2021/03/29 14:31:51 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,33 +15,41 @@
 void
 	sort_three(t_stack *a, t_stack *b)
 {
-	int	ilow;
-	int	ibig;
+	if (!issorted(a, ascending, getibval(a)))
+	{
+		stack_operation(a, b, SA);
+		ft_putendl_fd("sa", STDOUT);
+	}
+	put_on_top(a, getilval(a), A);
+}
 
-	ilow = getilval(a);
-	ibig = getibval(a);
-	if (ibig == 0)
-	{
-		stack_operation(a, b, SA);
-		ft_putendl_fd("sa", STDOUT);
-	}
-	else if (ilow == a->top - 1)
-	{
-		stack_operation(a, b, RA);
-		ft_putendl_fd("ra", STDOUT);
-		stack_operation(a, b, SA);
-		ft_putendl_fd("sa", STDOUT);
-		stack_operation(a, b, RRA);
-		ft_putendl_fd("rra", STDOUT);
-	}
+void
+	sort_fourfive(t_stack *a, t_stack *b)
+{
+	if (issorted(a, ascending, getibval(a)))
+		put_on_top(a, getilval(a), A);
 	else
 	{
-		if (a->items[a->top - 1] > a->items[a->top - 2])
+		while (a->top > 3)
+		{
+			stack_operation(a, b, PB);
+			ft_putendl_fd("pb", STDOUT);
+		}
+		if (!issorted(a, ascending, getibval(a)))
 		{
 			stack_operation(a, b, SA);
 			ft_putendl_fd("sa", STDOUT);
 		}
-		stack_operation(a, b, RRA);
-		ft_putendl_fd("rra", STDOUT);
+		while (!issorted(a, ascending, 0) || b->top > 0)
+		{
+			if (b->top == 0)
+				put_on_top(a, getilval(a), A);
+			else
+			{
+				put_on_top(a, getinsertidx(a, b->items[b->top - 1]), A);
+				stack_operation(a, b, PA);
+				ft_putendl_fd("pa", STDOUT);
+			}
+		}
 	}
 }

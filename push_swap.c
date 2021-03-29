@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 10:58:03 by user42            #+#    #+#             */
-/*   Updated: 2021/03/26 16:45:28 by user42           ###   ########.fr       */
+/*   Updated: 2021/03/29 15:04:13 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static void
 	else if (a->maxsize == 3)
 		sort_three(a, b);
 	else if (a->maxsize < 6)
+		sort_fourfive(a, b);
+	else if (a->maxsize <= 100)
 		insertsort(a, b);
 }
 
