@@ -47,7 +47,7 @@ void	swap(t_stack *stack);
 void	push(t_stack *dest, t_stack *src);
 void	rotate(t_stack *stack);
 void	rrotate(t_stack *stack);
-void	stack_operation(t_stack *a, t_stack *b, int operation);
+void	stack_operation(t_stack *a, t_stack *b, int operation, int print);
 
 int		getoperation(char *line);
 
@@ -75,5 +75,10 @@ int		getinsertidx(t_stack *a, int nb_to_insert);
 int		getinsertidx_r(t_stack *a, int nb_to_insert);
 void	put_on_top(t_stack *a, int idx, int stack_id);
 void	rotate_opti(t_stack *a, t_stack *b, int idx_a, int idx_b);
+
+int		invalidarg(char *arg);
+int		duplicates(t_stack *stack);
+void	setstack(t_stack *stack, int maxsize, int top, int *items);
+int		freeret(int *p1, int *p2, int ret);
 
 #endif

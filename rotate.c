@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 13:55:31 by user42            #+#    #+#             */
-/*   Updated: 2021/04/01 10:33:41 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/03 16:52:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,10 @@ void
 	int	d1;
 	int	d2;
 
-	//printf("rotating a[%d] : %d and b[%d] : %d\n", idx_a, a->items[idx_a], idx_b, b->items[idx_b]);
 	m1 = getmove(idx_a, a->top);
 	m2 = getmove(idx_b, b->top);
 	d1 = getdist(idx_a, a->top);
 	d2 = getdist(idx_b, b->top);
-	//printf("m1:%d\tm2:%d\td1:%d\td2:%d\n", m1, m2, d1, d2);
 	if (m1 == 0 || m2 == 0)
 	{
 		if (m1 == 0)
@@ -39,29 +37,21 @@ void
 		{
 			while (d1-- > 0)
 			{
-				stack_operation(a, b, RRR);
-				ft_putendl_fd("rrr", STDOUT);
+				stack_operation(a, b, RRR, 1);
 				d2--;
 			}
 			while (d2-- > 0)
-			{
-				stack_operation(a, b, RRB);
-				ft_putendl_fd("rrb", STDOUT);
-			}
+				stack_operation(a, b, RRB, 1);
 		}
 		else
 		{
 			while (d2-- > 0)
 			{
-				stack_operation(a, b, RRR);
-				ft_putendl_fd("rrr", STDOUT);
+				stack_operation(a, b, RRR, 1);
 				d1--;
 			}
 			while (d1-- > 0)
-			{
-				stack_operation(a, b, RRA);
-				ft_putendl_fd("rra", STDOUT);
-			}
+				stack_operation(a, b, RRA, 1);
 		}
 	}
 	else if (m1 > 0 && m2 > 0)
@@ -70,29 +60,21 @@ void
 		{
 			while (d1-- > 0)
 			{
-				stack_operation(a, b, RR);
-				ft_putendl_fd("rr", STDOUT);
+				stack_operation(a, b, RR, 1);
 				d2--;
 			}
 			while (d2-- > 0)
-			{
-				stack_operation(a, b, RB);
-				ft_putendl_fd("rb", STDOUT);
-			}
+				stack_operation(a, b, RB, 1);
 		}
 		else
 		{
 			while (d2-- > 0)
 			{
-				stack_operation(a, b, RR);
-				ft_putendl_fd("rr", STDOUT);
+				stack_operation(a, b, RR, 1);
 				d1--;
 			}
 			while (d1-- > 0)
-			{
-				stack_operation(a, b, RA);
-				ft_putendl_fd("ra", STDOUT);
-			}
+				stack_operation(a, b, RA, 1);
 		}
 	}
 	else
@@ -104,43 +86,29 @@ void
 			{
 				while (d1-- > 0)
 				{
-					stack_operation(a, b, RRR);
-					ft_putendl_fd("rrr", STDOUT);
+					stack_operation(a, b, RRR, 1);
 					d2--;
 					if (d2 == 0)
-						break;
+						break ;
 				}
 				while (d1-- > 0)
-				{
-					stack_operation(a, b, RRA);
-					ft_putendl_fd("rra", STDOUT);
-				}
+					stack_operation(a, b, RRA, 1);
 				while (d2-- > 0)
-				{
-					stack_operation(a, b, RRB);
-					ft_putendl_fd("rrb", STDOUT);
-				}
+					stack_operation(a, b, RRB, 1);
 			}
 			else if (m1 > 0)
 			{
 				while (d1-- > 0)
 				{
-					stack_operation(a, b, RR);
-					ft_putendl_fd("rr", STDOUT);
+					stack_operation(a, b, RR, 1);
 					d2--;
 					if (d2 == 0)
-						break;
+						break ;
 				}
 				while (d1-- > 0)
-				{
-					stack_operation(a, b, RA);
-					ft_putendl_fd("ra", STDOUT);
-				}
+					stack_operation(a, b, RA, 1);
 				while (d2-- > 0)
-				{
-					stack_operation(a, b, RB);
-					ft_putendl_fd("rb", STDOUT);
-				}
+					stack_operation(a, b, RB, 1);
 			}
 		}
 		else if (d2 > a->top / 2)
@@ -150,43 +118,29 @@ void
 			{
 				while (d2-- > 0)
 				{
-					stack_operation(a, b, RRR);
-					ft_putendl_fd("rrr", STDOUT);
+					stack_operation(a, b, RRR, 1);
 					d1--;
 					if (d1 == 0)
-						break;
+						break ;
 				}
 				while (d2-- > 0)
-				{
-					stack_operation(a, b, RRB);
-					ft_putendl_fd("rrb", STDOUT);
-				}
+					stack_operation(a, b, RRB, 1);
 				while (d1-- > 0)
-				{
-					stack_operation(a, b, RRA);
-					ft_putendl_fd("rra", STDOUT);
-				}
+					stack_operation(a, b, RRA, 1);
 			}
 			else if (m2 > 0)
 			{
 				while (d2-- > 0)
 				{
-					stack_operation(a, b, RR);
-					ft_putendl_fd("rr", STDOUT);
+					stack_operation(a, b, RR, 1);
 					d1--;
 					if (d1 == 0)
-						break;
+						break ;
 				}
 				while (d2-- > 0)
-				{
-					stack_operation(a, b, RB);
-					ft_putendl_fd("rb", STDOUT);
-				}
+					stack_operation(a, b, RB, 1);
 				while (d1-- > 0)
-				{
-					stack_operation(a, b, RA);
-					ft_putendl_fd("ra", STDOUT);
-				}
+					stack_operation(a, b, RA, 1);
 			}
 		}
 		else
@@ -261,4 +215,3 @@ void
 		}
 	}
 }
-

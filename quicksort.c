@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 10:08:55 by user42            #+#    #+#             */
-/*   Updated: 2021/04/03 13:16:48 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/03 17:06:44 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,10 @@ static int
 	return (r);
 }
 
-void
-	quicksort(t_stack *a, t_stack *b)
+static void
+	pivot(t_stack *a, t_stack *b)
 {
 	int	median;
-	int	idx_to_insert_a;
-	int	idx_to_insert_b;
 
 	while (a->top > 5)
 	{
@@ -43,14 +41,21 @@ void
 				break ;
 			if (a->items[a->top - 1] <= median)
 			{
-				stack_operation(a, b, PB);
-				ft_putendl_fd("pb", STDOUT);
+				stack_operation(a, b, PB, 1);
 				continue ;
 			}
-			stack_operation(a, b, RA);
-			ft_putendl_fd("ra", STDOUT);
+			stack_operation(a, b, RA, 1);
 		}
 	}
+}
+
+void
+	quicksort(t_stack *a, t_stack *b)
+{
+	int	idx_to_insert_a;
+	int	idx_to_insert_b;
+
+	pivot(a, b);
 	sort_fourfive(a, b);
 	while (b->top)
 	{
@@ -60,7 +65,6 @@ void
 			idx_to_insert_b = getibval(b);
 		idx_to_insert_a = getinsertidx(a, b->items[idx_to_insert_b]);
 		rotate_opti(a, b, idx_to_insert_a, idx_to_insert_b);
-		stack_operation(a, b, PA);
-		ft_putendl_fd("pa", STDOUT);
+		stack_operation(a, b, PA, 1);
 	}
 }

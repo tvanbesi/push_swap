@@ -8,7 +8,8 @@ SRCS		= 	prompt.c \
 				rotate.c \
 				utils_cmp.c \
 				utils_stack.c \
-				utils_insertsort.c
+				utils_insertsort.c \
+				utils_main.c
 OBJS		= ${SRCS:.c=.o}
 CC			= clang
 CFLAGS		= -Wall -Wextra -Werror

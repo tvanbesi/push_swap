@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 13:52:34 by user42            #+#    #+#             */
-/*   Updated: 2021/04/01 11:20:36 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/03 15:14:00 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@ static void
 {
 	put_on_top(b, getibval(b), B);
 	while (b->top)
-	{
-		stack_operation(a, b, PA);
-		ft_putendl_fd("pa", STDOUT);
-	}
+		stack_operation(a, b, PA, 1);
 }
 
 void
@@ -45,8 +42,7 @@ void
 		}
 		else
 			put_on_top(a, idx_to_insert_a, A);
-		stack_operation(a, b, PB);
-		ft_putendl_fd("pb", STDOUT);
+		stack_operation(a, b, PB, 1);
 	}
 	all_to_a(a, b);
 }
