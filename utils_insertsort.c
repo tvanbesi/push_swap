@@ -6,11 +6,27 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 13:24:31 by user42            #+#    #+#             */
-/*   Updated: 2021/03/29 14:55:04 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/01 10:31:05 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
+
+int
+	getmove(int idx, int size)
+{
+	if (idx < size / 2)
+		return (-(idx + 1));
+	return (size - (idx + 1));
+}
+
+int
+	getdist(int idx, int size)
+{
+	if (idx < size / 2)
+		return (idx + 1);
+	return (size - (idx + 1));
+}
 
 int
 	getival(t_stack *stack, int val)

@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 13:47:25 by user42            #+#    #+#             */
-/*   Updated: 2021/03/24 15:05:31 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/01 09:51:17 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,17 @@ void
 
 	top_a = a->top;
 	top_b = b->top;
-	ft_putendl_fd("STACK A:", STDOUT);
-	while (top_a-- > 0)
+	printf("__________\n");
+	printf("%-15s%-15s\n", "STACK A", "STACK B");
+	while (top_a > 0 || top_b > 0)
 	{
-		ft_putnbr_fd(a->items[top_a], STDOUT);
-		ft_putstr_fd("\n", STDOUT);
+		top_a--;
+		top_b--;
+		if (top_a >= 0 && top_b >= 0)
+			printf("%-15d%-15d\n", a->items[top_a], b->items[top_b]);
+		else if (top_a >= 0)
+			printf("%-15d%-15s\n", a->items[top_a], "");
+		else if (top_b >= 0)
+			printf("%-15s%-15d\n", "", b->items[top_b]);
 	}
-	ft_putendl_fd("----------", STDOUT);
-	ft_putendl_fd("STACK B:", STDOUT);
-	while (top_b-- > 0)
-	{
-		ft_putnbr_fd(b->items[top_b], STDOUT);
-		ft_putstr_fd("\n", STDOUT);
-	}
-	ft_putendl_fd("__________", STDOUT);
 }

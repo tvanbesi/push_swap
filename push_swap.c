@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 10:58:03 by user42            #+#    #+#             */
-/*   Updated: 2021/03/29 15:04:13 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/01 12:11:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,13 @@ static int
 static void
 	push_swap(t_stack *a, t_stack *b)
 {
-	if (a->maxsize == 2)
-	{
-		stack_operation(a, b, SA);
-		ft_putendl_fd("sa", STDOUT);
-	}
-	else if (a->maxsize == 3)
+	if (a->maxsize == 3)
 		sort_three(a, b);
 	else if (a->maxsize < 6)
 		sort_fourfive(a, b);
-	else if (a->maxsize <= 100)
-		insertsort(a, b);
+	else
+		quicksort(a, b);
+	put_on_top(a, getilval(a), A);
 }
 
 int
@@ -66,7 +62,7 @@ int
 		items_a[argc - 1 - i] = ft_atoi(argv[i]);
 		i++;
 	}
-	// check for duplicates and over INTMAX
+	// check for duplicates and over INTMAX AND REDO FDPUTSTR PRINT WHOLE WORDS
 	stack_a.maxsize = argc - 1;
 	stack_a.top = stack_a.maxsize;
 	stack_a.items = items_a;

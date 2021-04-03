@@ -6,63 +6,61 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 10:08:55 by user42            #+#    #+#             */
-/*   Updated: 2021/03/25 10:57:59 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/03 13:16:48 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-#include <unistd.h>
-
 static int
-	getpivot(t_stack *stack)
+	getmedian(t_stack *a)
 {
-	int	lowest;
-	int	i;
 	int	r;
-	
+	int	i;
+	int	chunk_size;
+
+	r = getlval(a);
 	i = 0;
-	lowest = stack->items[0];
-	r = 0;
-	while (i < stack->top)
-	{
-		if (stack->items[i] < lowest)
-		{
-			r = i;
-			lowest = stack->items[i];
-		}
-		i++;
-	}
+	chunk_size = ft_min(a->top / 2 - 1, 50);
+	while (i++ < chunk_size)
+		r = getlval_t(a, r);
 	return (r);
 }
 
 void
-	pivot(t_stack *a, t_stack *b)
+	quicksort(t_stack *a, t_stack *b)
 {
-	int	pivot;
+	int	median;
+	int	idx_to_insert_a;
+	int	idx_to_insert_b;
 
-	pivot = getpivot(a);
-	if (pivot != a->top - 1)
+	while (a->top > 5)
 	{
-		if (pivot < a->top / 2)
+		median = getmedian(a);
+		while (getlval(a) <= median)
 		{
-			pivot++;
-			while (pivot-- > 0)
+			if (a->top == 5)
+				break ;
+			if (a->items[a->top - 1] <= median)
 			{
-				rrotate(a);
-				ft_putendl_fd("rra", STDOUT);
+				stack_operation(a, b, PB);
+				ft_putendl_fd("pb", STDOUT);
+				continue ;
 			}
-		}
-		else
-		{
-			pivot = (a->top - 1) - pivot;
-			while (pivot-- > 0)
-			{
-				rotate(a);
-				ft_putendl_fd("ra", STDOUT);
-			}
+			stack_operation(a, b, RA);
+			ft_putendl_fd("ra", STDOUT);
 		}
 	}
-	ft_putendl_fd("pb", STDOUT);
-	push(b, a);
+	sort_fourfive(a, b);
+	while (b->top)
+	{
+		if (getdist(getilval(b), b->top) < getdist(getibval(b), b->top))
+			idx_to_insert_b = getilval(b);
+		else
+			idx_to_insert_b = getibval(b);
+		idx_to_insert_a = getinsertidx(a, b->items[idx_to_insert_b]);
+		rotate_opti(a, b, idx_to_insert_a, idx_to_insert_b);
+		stack_operation(a, b, PA);
+		ft_putendl_fd("pa", STDOUT);
+	}
 }

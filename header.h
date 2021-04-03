@@ -35,12 +35,6 @@ typedef enum		e_optype
 	RRR
 }					t_optype;
 
-typedef enum		e_chunk
-{
-	MIN,
-	MAX
-}					t_chunk;
-
 typedef enum		e_stack_id
 {
 	A,
@@ -62,7 +56,7 @@ void	printstacks(t_stack *a, t_stack *b);
 void	sort_three(t_stack *a, t_stack *b);
 void	sort_fourfive(t_stack *a, t_stack *b);
 void	insertsort(t_stack *a, t_stack *b);
-void	pivot(t_stack *a, t_stack *b);
+void	quicksort(t_stack *a, t_stack *b);
 
 int		issorted(t_stack *stack, int (*f)(int, int), int start_pos);
 int		ascending(int a, int b);
@@ -74,9 +68,12 @@ int		getlval(t_stack *stack);
 int		getbval(t_stack *stack);
 int		getlval_t(t_stack *stack, int threshold);
 int		getbval_t(t_stack *stack, int threshold);
+int		getdist(int idx, int size);
+int		getmove(int idx, int size);
 
 int		getinsertidx(t_stack *a, int nb_to_insert);
 int		getinsertidx_r(t_stack *a, int nb_to_insert);
 void	put_on_top(t_stack *a, int idx, int stack_id);
+void	rotate_opti(t_stack *a, t_stack *b, int idx_a, int idx_b);
 
 #endif

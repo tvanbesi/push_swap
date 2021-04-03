@@ -6,11 +6,13 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 10:58:03 by user42            #+#    #+#             */
-/*   Updated: 2021/03/29 15:59:42 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/01 15:48:36 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
+
+#include <time.h>
 
 static int
 	invalidarg(char *arg)
@@ -42,6 +44,8 @@ static void
 		}
 		stack_operation(a, b, operation);
 		//printstacks(a, b);
+		//sleep(1);
+		//nanosleep((const struct timespec[]){{0, 500000000L}}, NULL);
 	}
 	if (r == 0)
 	{
@@ -90,6 +94,7 @@ int
 	stack_b.top = 0;
 	stack_b.items = items_b;
 	checker(&stack_a, &stack_b);
+	//printstacks(&stack_a, &stack_b);
 	free(items_a);
 	free(items_b);
 	return (0);
