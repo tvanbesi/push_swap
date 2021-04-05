@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 10:58:03 by user42            #+#    #+#             */
-/*   Updated: 2021/04/03 17:45:15 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/05 15:11:01 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,22 @@ static void
 	put_on_top(a, getilval(a), A);
 }
 
+static int
+	atoi_argv(int argc, char **argv, int *items)
+{
+	int	i;
+
+	i = 1;
+	while (i < argc)
+	{
+		if (invalidarg(argv[i]))
+			return (-1);
+		items[argc - 1 - i] = ft_atoi(argv[i]);
+		i++;
+	}
+	return (0);
+}
+
 int
 	main(int argc, char **argv)
 {
@@ -39,17 +55,12 @@ int
 	if (!(items_a = malloc((argc - 1) * sizeof(int)))
 	|| !(items_b = malloc((argc - 1) * sizeof(int))))
 		return (-1);
-	while (i < argc)
-	{
-		if (invalidarg(argv[i]))
-			return (freeret(items_a, items_b, -1));
-		items_a[argc - 1 - i] = ft_atoi(argv[i]);
-		i++;
-	}
-	//if (duplicates(&stack_a))
-	//	return (freeret(items_a, items_b, 0));
+	if (atoi_argv(argc, argv, items_a) == -1)
+		return (freeret(items_a, items_b, -1));
 	setstack(&stack_a, argc - 1, argc - 1, items_a);
 	setstack(&stack_b, argc - 1, 0, items_b);
+	if (duplicates(&stack_a))
+		return (freeret(items_a, items_b, 0));
 	push_swap(&stack_a, &stack_b);
 	free(items_a);
 	free(items_b);

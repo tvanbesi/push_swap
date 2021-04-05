@@ -76,6 +76,13 @@ int		getinsertidx_r(t_stack *a, int nb_to_insert);
 void	put_on_top(t_stack *a, int idx, int stack_id);
 void	rotate_opti(t_stack *a, t_stack *b, int idx_a, int idx_b);
 
+int		d1_bigger_halfstack_b(t_stack *a, t_stack *b, int idx_a, int idx_b);
+int		d2_bigger_halfstack_a(t_stack *a, t_stack *b, int idx_a, int idx_b);
+void	smart_rrotate_b(t_stack *a, t_stack *b, int d1, int d2);
+void	smart_rrotate_a(t_stack *a, t_stack *b, int d1, int d2);
+void	smart_rotate_b(t_stack *a, t_stack *b, int d1, int d2);
+void	smart_rotate_a(t_stack *a, t_stack *b, int d1, int d2);
+
 int		invalidarg(char *arg);
 int		duplicates(t_stack *stack);
 void	setstack(t_stack *stack, int maxsize, int top, int *items);

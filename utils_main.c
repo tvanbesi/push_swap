@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 17:22:33 by user42            #+#    #+#             */
-/*   Updated: 2021/04/03 17:44:14 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/04 13:46:33 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,13 @@ int
 	}
 	if (s == 1)
 	{
-		if (ft_strlen(arg) > 10 || ft_strncmp(arg, "2147483647", 11) > 0)
+		if (ft_strlen(arg) > 10
+		|| (ft_strlen(arg) == 10 && ft_strncmp(arg, "2147483647", 11) > 0))
 			return (1);
 	}
 	else if (s == -1)
-		if (ft_strlen(arg) > 10 || ft_strncmp(arg, "2147483648", 11) > 0)
+		if (ft_strlen(arg) > 10
+		|| (ft_strlen(arg) == 10 && ft_strncmp(arg, "2147483648", 11) > 0))
 			return (1);
 	while (*arg)
 		if (!ft_isdigit(*arg++))

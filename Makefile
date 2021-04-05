@@ -6,6 +6,9 @@ SRCS		= 	prompt.c \
 				insertsort.c \
 				customsort.c \
 				rotate.c \
+				rotate_opti.c \
+				utils_rotate_opti.c \
+				utils_smart_rotate.c \
 				utils_cmp.c \
 				utils_stack.c \
 				utils_insertsort.c \
